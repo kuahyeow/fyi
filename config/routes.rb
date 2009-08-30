@@ -9,6 +9,7 @@
 ActionController::Routing::Routes.draw do |map|
 
   map.resources :requests
+  map.resources :public_bodies, :as => "bodies"
 
     # The priority is based upon order of creation: first created -> highest priority.
 

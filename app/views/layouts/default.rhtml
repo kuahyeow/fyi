@@ -110,8 +110,8 @@
 	<div id="topnav">
 		<ul id="navigation">
 			<li><a href="/">Make request</a></li>
-			<li><%= link_to "View requests", request_list_url(:view => 'successful') %></li>
-			<li><%= link_to "View authorities", list_public_bodies_default %></li>
+			<li><%= link_to "View requests", requests_path %></li>
+			<li><%= link_to "View authorities", public_bodies_path %></li>
 			<% if @user %>
 				<li><%=link_to "My requests", user_url(@user) %></li>
 			<% end %>

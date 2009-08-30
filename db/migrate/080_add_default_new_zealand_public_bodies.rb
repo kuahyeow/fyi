@@ -7,7 +7,7 @@ class AddDefaultNewZealandPublicBodies < ActiveRecord::Migration
       :version => 1,
       :last_edit_editor => "automated",
       :last_edit_comment => "automated",
-      :url_name => "Test Body Home Page",
+      :url_name => "test-body",
       :home_page => "http://example.com/",
       :notes => "",
       :first_letter => "T"

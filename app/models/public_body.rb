@@ -44,6 +44,10 @@ class PublicBody < ActiveRecord::Base
     has_many :public_body_tags
     has_many :track_things, :order => 'created_at desc'
 
+  def to_param
+    self.url_name
+  end
+
     def self.categories_with_headings
         [
             "Miscellaneous",
