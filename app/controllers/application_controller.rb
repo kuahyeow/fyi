@@ -8,7 +8,6 @@
 #
 # $Id: application.rb,v 1.53 2009-07-14 23:30:37 francis Exp $
 
-
 class ApplicationController < ActionController::Base
     # Standard headers, footers and navigation for whole site
     layout "default"
