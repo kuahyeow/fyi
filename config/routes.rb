@@ -7,7 +7,7 @@
 # $Id: routes.rb,v 1.89 2009-07-01 11:07:19 francis Exp $
 
 ActionController::Routing::Routes.draw do |map|
-
+  map.root :controller => :requests
   map.requests "/requests", :controller => :requests
   map.resources :public_bodies, :as => "bodies", :shallow => true, :has_many => :requests
 
