@@ -16,5 +16,11 @@ class PublicBodiesController < ApplicationController
     @public_body = PublicBody.find_by_url_name(params[:id])
     @track_thing = TrackThing.create_track_for_public_body(@public_body)
   end
+
+  def by_category
+    @public_bodies = PublicBody.find(:all, :include => :public_body_tags, :conditions => ["public_body_tags.name = ?", params[:category]])
+    render :template => "index"
+  end
+
 end
 

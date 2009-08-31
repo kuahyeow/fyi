@@ -8,6 +8,8 @@
 
 ActionController::Routing::Routes.draw do |map|
   map.root :controller => :requests
+
+  map.bodies_by_category "/bodies/by_category/:category", :controller => "public_bodies", :action => "by_category"
   map.requests "/requests", :controller => :requests
   map.resources :public_bodies, :as => "bodies", :shallow => true, :has_many => :requests
 

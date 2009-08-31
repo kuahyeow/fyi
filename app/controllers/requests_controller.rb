@@ -18,6 +18,9 @@ class RequestsController < ApplicationController
 
   def create
     @request = PublicBody.create(params[:info_request])
+    if @request.save
+      
+    end
   end
 end
 

@@ -304,7 +304,7 @@ class PublicBody < ActiveRecord::Base
                 end
                 if html
                     # XXX this should call proper route helpers, but is in model sigh
-                    desc = '<a href="/body/list/' + tag.name + '">' + desc + '</a>'
+                    desc = "<a href=\"/bodies/by_category/#{tag.name}\">#{desc}</a>"
                 end
                 types.push(desc)
             end
