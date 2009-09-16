@@ -1,6 +1,6 @@
 class AddIsBounceToIncomingMessages < ActiveRecord::Migration
   def self.up
-    add_column :incoming_messages, :is_bounce, :boolean, :default => false
+    #add_column :incoming_messages, :is_bounce, :boolean, :default => false
     IncomingMessage.update_all "is_bounce = 'f'"
   end
 
