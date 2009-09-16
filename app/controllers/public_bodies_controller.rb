@@ -22,5 +22,19 @@ class PublicBodiesController < ApplicationController
     render :template => "index"
   end
 
+  def view_email
+    @public_body = PublicBody.find_by_url_name(params[:id])
+
+    if params[:submitted_view_email]
+      if verify_recaptcha
+        flash.discard(:error)
+        render :template => "public_bodies/view_email"
+        return
+      end
+      flash.now[:error] = "There was an error with the words you entered, please try again."
+    end
+    render :template => "public_bodies/view_email_captcha"
+  end
+
 end
 

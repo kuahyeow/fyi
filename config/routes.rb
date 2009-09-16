@@ -11,7 +11,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.bodies_by_category "/bodies/by_category/:category", :controller => "public_bodies", :action => "by_category"
   map.requests "/requests", :controller => :requests
-  map.resources :public_bodies, :as => "bodies", :shallow => true, :has_many => :requests
+  map.resources :public_bodies, :as => "bodies", :shallow => true, :has_many => :requests, :member => {:view_email => :get}
 
     # The priority is based upon order of creation: first created -> highest priority.
 
@@ -67,7 +67,6 @@ ActionController::Routing::Routes.draw do |map|
         body.list_public_bodies "/body", :action => 'list'
         body.list_public_bodies "/body/list/:tag", :action => 'list'
         body.show_public_body "/body/:url_name", :action => 'show'
-        body.view_public_body_email "/body/:url_name/view_email", :action => 'view_email'
     end
 
     map.with_options :controller => 'comment' do |comment|
