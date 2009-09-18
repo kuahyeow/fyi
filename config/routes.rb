@@ -11,7 +11,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.bodies_by_category "/bodies/by_category/:category", :controller => "public_bodies", :action => "by_category"
   map.requests "/requests", :controller => :requests
-  map.resources :public_bodies, :as => "bodies", :shallow => true, :has_many => :requests, :member => {:view_email => :get}
+  map.resources :public_bodies, :as => "bodies", :shallow => true, :has_many => :requests, :member => {:view_email => [:get, :post]}
 
     # The priority is based upon order of creation: first created -> highest priority.
 
