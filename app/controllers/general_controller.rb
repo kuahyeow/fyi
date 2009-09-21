@@ -10,7 +10,7 @@
 class GeneralController < ApplicationController
 
     # New, improved front page!
-    def frontpage
+    def index
         # This is too slow
         #@popular_bodies = PublicBody.find(:all, :select => "*, (select count(*) from info_requests where info_requests.public_body_id = public_bodies.id) as c", :order => "c desc", :limit => 32)
 
