@@ -7,11 +7,13 @@
 # $Id: routes.rb,v 1.89 2009-07-01 11:07:19 francis Exp $
 
 ActionController::Routing::Routes.draw do |map|
-  map.root :controller => :requests
-
   map.bodies_by_category "/bodies/by_category/:category", :controller => "public_bodies", :action => "by_category"
-  map.requests "/requests", :controller => :requests
-  map.resources :public_bodies, :as => "bodies", :shallow => true, :has_many => :requests, :member => {:view_email => [:get, :post]}
+  map.list_requests "/requests/:status", :requirements => {:status => /[a-z]+/}, :controller => :requests, :status => "successful"
+  map.resources :public_bodies, :as => "bodies", :shallow => true, :member => {:view_email => [:get, :post]} do |public_body|
+    public_body.resources :info_requests, :as => "requests"
+  end
+  map.resources :general, :only => [:index]
+  map.resources :help, :collection => {:about => :get}, :only => []
 
     # The priority is based upon order of creation: first created -> highest priority.
 
@@ -20,8 +22,6 @@ ActionController::Routing::Routes.draw do |map|
     # Keep in mind you can assign values other than :controller and :action
     
     map.with_options :controller => 'general' do |general|
-        general.frontpage           '/',            :action => 'frontpage'
-
         general.search_redirect '/search',      :action => 'search_redirect'
         # XXX combined is the search query, and then if sorted a "/newest" at the end.
         # Couldn't find a way to do this in routes which also picked up multiple other slashes
@@ -35,7 +35,6 @@ ActionController::Routing::Routes.draw do |map|
     map.with_options :controller => 'request' do |request|
         request.request_list   '/list/:view',        :action => 'list', :view => nil
 
-        request.new_request    '/new',         :action => 'new'
         request.new_request_to_body    '/new/:public_body_id',         :action => 'new'
 
         request.show_request     '/request/:url_title', :action => 'show'
@@ -134,5 +133,6 @@ ActionController::Routing::Routes.draw do |map|
     #map.connect ':controller/:action/:id.:format'
     #map.connect ':controller/:action/:id'
     # map.connect '/:controller/:action'
+    map.root :controller => :general
 end
 
