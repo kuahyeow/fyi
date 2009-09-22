@@ -11,17 +11,8 @@ class GeneralController < ApplicationController
 
   # New, improved front page!
   def index
-    # This is too slow
-    #@popular_bodies = PublicBody.find(:all, :select => "*, (select count(*) from info_requests where info_requests.public_body_id = public_bodies.id) as c", :order => "c desc", :limit => 32)
-        
-        
+    @popular_bodies = PublicBody.most_popular
 
-    # Just hardcode some popular authorities for now
-    @popular_bodies = PublicBody.find(:all, :conditions => ["url_name in ('bbc', 'dwp', 'dh', 'local_government_ombudsmen', 'royal_mail_group', 'mod', 'lambeth_borough_council', 'edinburgh_council')"])
-
-    # This is too slow
-    #@random_requests = InfoRequest.find(:all, :order => "random()", :limit => 8, :conditions => ["described_state = ? and prominence = ?", 'successful', 'normal'] )
-        
     # Get some successful requests
     begin
       query = 'variety:response (status:successful OR status:partially_successful)'

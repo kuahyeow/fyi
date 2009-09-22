@@ -20,11 +20,7 @@
       = submit_tag "Search"
       %br
       e.g.
-      = link_to 'Liverpool', search_url('liverpool', 'bodies')
-      ,
-      = link_to 'MRSA', search_url('mrsa', 'bodies')
-      ,
-      = link_to 'Treasury', search_url('treasury', 'bodies')
+      =@popular_bodies[0, 3].inject([]){|result, body| result << link_to(body.name, body) }.join(", ")
       %br
       %br
       OR,
