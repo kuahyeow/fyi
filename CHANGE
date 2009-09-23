@@ -1,0 +1,10 @@
+TODO make it work in mysql too
+
+
+Changes
+Commented out environment.rb - error_messages
+fixed view_public_body_email_url to use new restful 
+Use ActionMailer::Base.default_url_options[:host] in new rails
+No need for ActionView::TemplateFinder in rails 2.3
+http://github.com/jeremydurham/custom-err-msg update custom_err_msg for rails 2.3.4
+add :type => view for outgoing_message_spec, so that can assert_select
