@@ -1,0 +1,197 @@
+- @title = "Make an " + h(@request.law_used_short) + " request to '" + h(@request.public_body.name) + "'"
+- if @existing_request
+  #errorExplanation.errorExplanation
+    %ul
+      %li
+        = user_or_you_capital_link(@existing_request.user)
+        already
+        created the same request on
+        = simple_date(@existing_request.created_at)
+        \.
+        You can either view the
+        %a{ :href => request_url(@existing_request) }
+          existing request
+        ,
+        or edit the details below to make a new but similar request.
+= foi_error_messages_for :info_request, :outgoing_message
+#request_advice
+  %h1
+    Read this before writing your
+    = h(@request.law_used_full)
+    request
+  %ul
+    %li
+      - form_tag("http://www.google.co.uk/search", {:id => "search_body_website_form", :method => "get"} ) do
+        %p
+          First,
+          - if !@request.public_body.publication_scheme.empty?
+            %strong
+              browse
+            the authority's
+            = link_to "publication scheme", @request.public_body.publication_scheme
+            or
+            %strong
+              search
+            their web site ...
+          - else
+            %strong
+              search
+            the authority's web site ...
+          - if !@request.public_body.calculated_home_page.nil?
+            %br
+            \&nbsp; &nbsp; &nbsp; &nbsp;
+            = text_field_tag 'q', params[:q], { :size => 20 }
+            = hidden_field_tag 'as_sitesearch', @request.public_body.calculated_home_page
+            = submit_tag "Search"
+          %br
+          \... to check that the info isn't already published.
+    %li
+      - if @request.public_body.info_requests.size > 0
+        Browse
+        = link_to "other requests", public_body_url(@request.public_body)
+        to '
+        = h(@request.public_body.name)
+        '
+        for examples of how to word your request.
+      - else
+        Browse
+        = link_to "other requests", request_list_url
+        for examples of how to word your request.
+    %li
+      Write your request in
+      %strong
+        simple, precise language
+      \.
+    %li
+      Ask for
+      %strong
+        specific
+      documents or information, this site is not suitable for general enquiries.
+    %li
+      Keep it
+      %strong
+        focused
+      \. Keep the cost down, and avoid making accusations
+      (
+      %a{ :href => "/help/about/#focused" }
+        why?
+      ).
+    %li
+      This site is
+      %strong
+        public
+      \. Everything you type and any response will be published.
+  - if @request.public_body.has_notes?
+    %h1
+      Special note for this authority!
+    %ul
+      %li
+        %p
+          = @request.public_body.notes_as_html
+  - if @request.public_body.eir_only?
+    %h1
+      Please ask for environmental information only
+    %p
+      The Freedom of Information Act
+      %strong
+        does not apply
+      to
+      = h(@request.public_body.name)
+      \.
+      However, you have the right to request environmental
+      information under a different law (
+      %a{ :href => "/help/about#eir" }
+        explanation
+      ).
+      This covers a very wide spectrum of information about the state of
+      the
+      %strong
+        natural and built environment
+      , such as:
+      %ul
+        %li
+          Air, water, soil, land, flora and fauna (including how these effect
+          human beings)
+        %li
+          Information on emissions and discharges (e.g. noise, energy,
+          radiation, waste materials)
+        %li
+          Human health and safety
+        %li
+          Cultural sites and built structures (as they may be affected by the
+          environmental factors listed above)
+        %li
+          Plans and administrative measures that affect these matters
+      %p
+        Please only request information that comes under those categories,
+        %strong
+          do not waste your
+          time
+        or the time of the public authority by requesting unrelated information.
+- form_for [@public_body, @request], :html => { :id => 'write_form' } do |f|
+  #request_form
+    %h1
+      %label.form_label{ :for => "info_request_public_body_id" }
+        To:
+      %span#to_public_body
+        = h(@request.public_body.name)
+    %p
+      %label.form_label{ :for => "info_request_title" }
+        Summary:
+      = f.text_field :title, :size => 50
+    .form_item_note
+      (a one line summary of the information you are requesting,
+      e.g.
+      - if @request.law_used == 'eir'
+        'Pollution levels over time for the River Tyne'
+      - else
+        'Crime statistics by ward level for Wales'
+      )
+    - fields_for :outgoing_message do |o|
+      %p
+        %label.form_label{ :for => "outgoing_message_body" }
+          Your request:
+        = o.text_area :body, :rows => 20, :cols => 60
+    .form_button
+      %script{ :type => "text/javascript" }
+        document.write('<input name="doSpell" type="button" value="Check spelling" onClick="openSpellChecker(document.getElementById(\'write_form\').body);"/> (optional)')
+    - if !@user
+      %p.form_note
+        Everything that you enter on this page, including
+        %strong
+          your name
+        ,
+        will be
+        %strong
+          displayed publicly
+        on
+        this website (
+        %a{ :href => "/help/about/#public_request" }
+          why?
+        ).
+        If you are thinking of using a pseudonym,
+        please
+        %a{ :href => "/help/about/#real_name" }
+          read this first
+        \.
+    - else
+      %p.form_note
+        Everything that you enter on this page
+        will be
+        %strong
+          displayed publicly
+        on
+        this website (
+        %a{ :href => "/help/about/#public_request" }
+          why?
+        ).
+    %p.form_note
+      %strong
+        Can I request information about myself?
+      %a{ :href => "/help/about#data_protection" }
+        No! (Click here for details)
+    .form_button
+      = f.hidden_field(:public_body_id, { :value => @request.public_body_id } )
+      = hidden_field_tag(:submitted_new_request, 1 )
+      = hidden_field_tag(:preview, 1 )
+      = submit_tag "Preview your public request"
