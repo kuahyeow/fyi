@@ -33,7 +33,7 @@ class AdminController < ApplicationController
         # cleared even if someone did that.
         expire_fragment /views\/request\/#{info_request.id}.*/
         # also force a search reindexing (so changed text reflected in search)
-        info_request.reindex_request_events
+        # info_request.reindex_request_events
     end
 end
 

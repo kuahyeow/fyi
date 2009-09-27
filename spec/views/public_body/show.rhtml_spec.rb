@@ -16,16 +16,10 @@ describe "when viewing a body" do
                          :calculated_home_page => '')
         @pb.stub!(:is_requestable?).and_return(true)
         @pb.stub!(:has_notes?).and_return(false)
-        @xap = mock_model(ActsAsXapian::Search, :matches_estimated => 2)
-        @xap.stub!(:results).and_return([
-          { :model => mock_event },
-          { :model => mock_event }
-        ])
-
+        
         assigns[:public_body] = @pb
         assigns[:track_thing] = mock_model(TrackThing, 
             :track_type => 'public_body_updates', :public_body => @pb, :params => {})
-        assigns[:xapian_requests] = @xap
         assigns[:page] = 1
         assigns[:per_page] = 10
     end
@@ -48,12 +42,6 @@ describe "when viewing a body" do
     it "should tell total number of requests" do
         render "public_body/show"
         response.should have_tag("h2", "4 Freedom of Information requests made")
-    end
-
-    it "should cope with no results" do
-        @xap.stub!(:results).and_return([])
-        render "public_body/show"
-        response.should have_tag("p", /Nobody has made any Freedom of Information requests/m)
     end
 
     it "should cope with Xapian being down" do

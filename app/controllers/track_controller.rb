@@ -14,8 +14,6 @@ class TrackController < ApplicationController
         @info_request = InfoRequest.find_by_url_title(params[:url_title])
         @track_thing = TrackThing.create_track_for_request(@info_request)
 
-        return atom_feed_internal if params[:feed] == 'feed'
-
         if self.track_set
             redirect_to request_url(@info_request)
         end
@@ -32,9 +30,7 @@ class TrackController < ApplicationController
         else
             raise "unknown request list view " + @view.to_s
         end
-
-        return atom_feed_internal if params[:feed] == 'feed'
-
+        
         if self.track_set
             redirect_to request_list_url(:view => @view)
         end
@@ -45,8 +41,6 @@ class TrackController < ApplicationController
         @public_body = PublicBody.find_by_url_name(params[:url_name])
         @track_thing = TrackThing.create_track_for_public_body(@public_body)
 
-        return atom_feed_internal if params[:feed] == 'feed'
-
         if self.track_set
             redirect_to public_body_url(@public_body)
         end
@@ -56,8 +50,6 @@ class TrackController < ApplicationController
     def track_user
         @track_user = User.find_by_url_name(params[:url_name])
         @track_thing = TrackThing.create_track_for_user(@track_user)
-
-        return atom_feed_internal if params[:feed] == 'feed'
 
         if self.track_set
             redirect_to user_url(@track_user)
@@ -71,8 +63,6 @@ class TrackController < ApplicationController
         query_array = params[:query_array]
         @query = query_array.join("/")
         @track_thing = TrackThing.create_track_for_search_query(@query)
-
-        return atom_feed_internal if params[:feed] == 'feed'
 
         if self.track_set
             redirect_to search_url(@query)
@@ -112,13 +102,6 @@ class TrackController < ApplicationController
             raise "can only view feeds for feed tracks, not email ones"
         end
         redirect_to do_track_url(@track_thing, 'feed'), :status=>:moved_permanently
-    end
-
-    def atom_feed_internal
-        @xapian_object = perform_search([InfoRequestEvent], @track_thing.track_query, @track_thing.params[:feed_sortby], nil, 25, 1) 
-        respond_to do |format|
-            format.atom { render :template => 'track/atom_feed' }
-        end
     end
 
     # Change or delete a track
