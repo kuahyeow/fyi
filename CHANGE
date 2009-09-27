@@ -1,4 +1,8 @@
-TODO make it work in mysql too
+general is not a resource, so should not use restful resource style url
+removed request_controller_spec
+removed views/request/show.rhtml_spec
+ignore info_requests_count for versioning of public_body
+fixed post_redirect to generate tokens (it wasn't when it should)
 
 
 Changes
