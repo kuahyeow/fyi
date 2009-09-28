@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
-describe OutgoingMessage, " when making an outgoing message" do
+describe OutgoingMessage, " when making an outgoing message", :type => :view do
     before do
         @outgoing_message = OutgoingMessage.new({
             :status => 'ready',

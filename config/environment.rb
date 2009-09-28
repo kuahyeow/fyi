@@ -85,7 +85,7 @@ end
 # Mime::Type.register "application/x-mobile", :mobile
 
 # Validation error messages
-ActiveRecord::Errors.default_error_messages[:blank] = "must be filled in"
+# ActiveRecord::Errors.default_error_messages[:blank] = "must be filled in" ##Comment out for time being
 # Monkeypatch! Use SPAN instead of DIV. See http://dev.rubyonrails.org/ticket/2210
 ActionView::Base.field_error_proc = Proc.new{ |html_tag, instance|  %(<span class="fieldWithErrors">#{html_tag}</span>)}
 
@@ -101,7 +101,7 @@ ActionView::Helpers::TagHelper.module_eval do
 end
 
 # Domain for URLs (so can work for scripts, not just web pages)
-#ActionController::UrlWriter.default_url_options[:host] = MySociety::Config.get("DOMAIN", 'localhost:3000')
+ActionMailer::Base.default_url_options[:host] = MySociety::Config.get("DOMAIN", 'localhost:3000')
 
 # So that javascript assets use full URL, so proxied admin URLs read javascript OK
 if (MySociety::Config.get("DOMAIN", "") != "")
