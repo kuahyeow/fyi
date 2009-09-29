@@ -94,27 +94,27 @@ end
 $html_validation_script = "/usr/bin/validate" # from Debian package wdg-html-validator
 if $tempfilecount.nil?
     $tempfilecount = 0
-    if File.exist?($html_validation_script)
-        module ActionController
-            module TestProcess
-                # Hook into the process function, so can automatically get HTML after each request
-                alias :original_process :process
+#    if File.exist?($html_validation_script)
+#        module ActionController
+#            module TestProcess
+#                # Hook into the process function, so can automatically get HTML after each request
+#                alias :original_process :process
 
-                def process(action, parameters = nil, session = nil, flash = nil)
-                    # Call original process function
-                    self.original_process(action, parameters, session, flash)
+#                def process(action, parameters = nil, session = nil, flash = nil)
+#                    # Call original process function
+#                    self.original_process(action, parameters, session, flash)
 
-                    # XXX Is there a better way to check this than calling a private method?
-                    return unless @response.template.controller.instance_eval { integrate_views? }
+#                    # XXX Is there a better way to check this than calling a private method?
+#                    return unless @response.template.controller.instance_eval { integrate_views? }
 
-                    # And then if HTML, not a redirect (302), and not a partial template (something/_something, such as in AJAX partial results)
-                    if @response.content_type == "text/html" and @response.response_code != 302 and not @response.rendered_file.include?("/_")
-                        validate_html(@response.body)
-                    end
-                end
-            end
-        end
-    else
-        puts "WARNING: HTML validation script " + $html_validation_script + " not found"
-    end
+#                    # And then if HTML, not a redirect (302), and not a partial template (something/_something, such as in AJAX partial results)
+#                    if @response.content_type == "text/html" and @response.response_code != 302 and not @response.rendered_file.include?("/_")
+#                        validate_html(@response.body)
+#                    end
+#                end
+#            end
+#        end
+#    else
+#        puts "WARNING: HTML validation script " + $html_validation_script + " not found"
+#    end
 end
