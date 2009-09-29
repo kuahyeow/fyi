@@ -49,8 +49,6 @@ Spec::Runner.configure do |config|
   #
   # For more information take a look at Spec::Runner::Configuration and Spec::Runner
 end
-<<<<<<< HEAD:spec/spec_helper.rb
-=======
 
 # XXX No idea what namespace/class/module to put this in 
 def receive_incoming_mail(email_name, email_to, email_from = 'geraldinequango@localhost')
@@ -120,4 +118,3 @@ if $tempfilecount.nil?
         puts "WARNING: HTML validation script " + $html_validation_script + " not found"
     end
 end
->>>>>>> 4d1928f... Got rake spec to work except for some views tests (on postgresql):spec/spec_helper.rb

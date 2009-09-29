@@ -23,7 +23,7 @@ module ActionMailer
     def initialize_layout_template_class(assigns)
       # for Rails 2.1 (and greater), we have to process view paths first!
       if Rails::VERSION::MAJOR >= 2 and Rails::VERSION::MINOR >= 1 and Rails::VERSION::MINOR < 3
-        ActionView::TemplateFinder.process_view_paths(layouts_path)
+         ActionView::ViewLoadPaths.new(Array(layouts_path))
       end
       returning(template = ActionView::Base.new(layouts_path, assigns, self)) do
         template.extend self.class.master_helper_module
