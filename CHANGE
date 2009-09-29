@@ -1,7 +1,3 @@
-remove all traces of xapian from specs and models
-alert_track method uses only xapian methods, so removed
-
-
 general is not a resource, so should not use restful resource style url
 removed request_controller_spec
 removed views/request/show.rhtml_spec

@@ -1,6 +1,19 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe "when listing recent requests" do
+  
+    before do
+        @xap = mock_model(ActsAsXapian::Search)
+        @xap.stub!(:matches_estimated).and_return(2)
+        @xap.stub!(:results).and_return([
+          { :model => mock_event },
+          { :model => mock_event }
+        ])
+        assigns[:xapian_object] = @xap
+        assigns[:page] = 1
+        assigns[:per_page] = 10
+    end
+      
     def mock_event 
         return mock_model(InfoRequestEvent, 
             :info_request => mock_model(InfoRequest, 

@@ -33,7 +33,12 @@ class PublicBodyController < ApplicationController
         # Use search query for this so can collapse and paginate easily
         # XXX really should just use SQL query here rather than Xapian.
         begin
-            @xapian_requests = nil
+            @xapian_requests = perform_search([InfoRequestEvent], 'requested_from:' + @public_body.url_name, 'newest', 'request_collapse')
+            if (@page > 1)
+                @page_desc = " (page " + @page.to_s + ")" 
+            else    
+                @page_desc = ""
+            end
         rescue
             @xapian_requests = nil
         end

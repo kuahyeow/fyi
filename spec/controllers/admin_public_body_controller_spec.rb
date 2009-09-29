@@ -8,6 +8,11 @@ describe AdminPublicBodyController, "when administering public bodies" do
         get :index
     end
 
+    it "searches for 'humpa'" do
+        get :index, :query => "humpa"
+        assigns[:public_bodies].should == [ public_bodies(:humpadink_public_body) ]
+    end
+
     it "shows a public body" do
         get :show, :id => 2
     end

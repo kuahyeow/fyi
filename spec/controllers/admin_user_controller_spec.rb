@@ -8,6 +8,11 @@ describe AdminUserController, "when administering users" do
         get :index
     end
 
+    it "searches for 'bob'" do
+        get :list, :query => "bob"
+        assigns[:admin_users].should == [ users(:bob_smith_user) ]
+    end
+
     it "shows a user" do
         get :show, :id => users(:bob_smith_user)
     end

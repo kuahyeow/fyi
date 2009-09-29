@@ -27,7 +27,7 @@ class InfoRequestsController < ApplicationController
     else
       raise "unknown request list view #{@status}"
     end
-    #@xapian_object = perform_search([InfoRequestEvent], query, sortby, 'request_collapse')
+    @xapian_object = perform_search([InfoRequestEvent], query, sortby, 'request_collapse')
     @title = @title + " (page " + @page.to_s + ")" if (@page > 1)
 
     @feed_autodetect = [ { :url => do_track_url(@track_thing, 'feed'), :title => @track_thing.params[:title_in_rss] } ]

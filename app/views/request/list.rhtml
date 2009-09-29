@@ -18,7 +18,7 @@
     <%= render :partial => 'track/tracking_links', :locals => { :track_thing => @track_thing, :own_request => false, :location => 'main' } %>
 <% end %>
 
-<% if !@xapian_object || @xapian_object.results.empty? %>
+<% if @xapian_object.results.empty? %>
     <p>No requests of this sort yet.</p>
 <% else %>
     <% for result in @xapian_object.results %>
@@ -28,9 +28,9 @@
             <p><strong>Unexpected search result type <%=result[:model].class.to_s%></strong></p>
         <% end %>
     <% end %>
-<%= will_paginate WillPaginate::Collection.new(@page, @per_page, @xapian_object.matches_estimated) %>
 <% end %>
 
+<%= will_paginate WillPaginate::Collection.new(@page, @per_page, @xapian_object.matches_estimated) %>
 
 <% if @track_thing %>
     <p></p>

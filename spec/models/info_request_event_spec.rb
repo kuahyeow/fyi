@@ -14,7 +14,16 @@ describe InfoRequestEvent do
         
     end
 
-    describe 'when saving' do     
+    describe 'when saving' do 
+  
+        it 'should mark the model for reindexing in xapian if there is no no_xapian_reindex flag on the object' do
+            event = InfoRequestEvent.new(:info_request => mock_model(InfoRequest), 
+                                         :event_type => 'sent', 
+                                         :params => {}) 
+            event.should_receive(:xapian_mark_needs_index)
+            event.save!
+        end
+    
     end
 
     describe "should know" do

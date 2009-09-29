@@ -194,6 +194,26 @@ class ApplicationController < ActionController::Base
         end
     end
 
+    # Function for search
+    def perform_search(models, query, sortby, collapse, per_page = 25, this_page = nil) 
+        @query = query
+        @sortby = sortby
+
+        # Work out sorting method
+        order_pair = order_to_sort_by(@sortby)
+        order = order_pair[0]
+        ascending = order_pair[1]
+
+        # Peform the search
+        @per_page = per_page
+        if this_page.nil?
+            @page = (params[:page] || "1").to_i
+        else
+            @page = this_page
+        end
+        return InfoRequest.full_search(models, @query, order, ascending, collapse, @per_page, @page) 
+    end
+
     # Store last visited pages, for contact form
     def set_last_request(info_request)
         session[:last_request_id] = info_request.id
