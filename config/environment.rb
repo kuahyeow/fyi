@@ -68,7 +68,7 @@ Rails::Initializer.run do |config|
 
   config.gem "rspec", :lib => false, :version => ">= 1.2.0"
   config.gem "rspec-rails", :lib => false, :version => ">= 1.2.0"
-
+  config.gem "htmlentities"
 end
 
 # Add new inflection rules using the following format 
