@@ -1,9 +1,13 @@
+Used tagging plugin acts_as_taggable_on from http://github.com/mbleigh/acts-as-taggable-on
+ * TagList.delimiter spaces
+ * remove all uses of public_body_tags
+
+
 general is not a resource, so should not use restful resource style url
 removed request_controller_spec
 removed views/request/show.rhtml_spec
 ignore info_requests_count for versioning of public_body
 fixed post_redirect to generate tokens (it wasn't when it should)
-
 
 Changes
 Commented out environment.rb - error_messages

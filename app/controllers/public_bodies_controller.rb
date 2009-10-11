@@ -18,7 +18,7 @@ class PublicBodiesController < ApplicationController
   end
 
   def by_category
-    @public_bodies = PublicBody.find(:all, :include => :public_body_tags, :conditions => ["public_body_tags.name = ?", params[:category]])
+    @public_bodies = PublicBody.tagged_with(params[:category])
     render :template => "index"
   end
 
